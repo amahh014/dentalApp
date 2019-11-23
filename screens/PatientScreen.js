@@ -7,7 +7,7 @@ import {
   Button,
   Badge
 } from '../components';
-import Icon from 'react-native-ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const PatientScreen = ({ navigation }) => (
   <View style={{ flex: 1 }}>
@@ -21,7 +21,7 @@ const PatientScreen = ({ navigation }) => (
         </FormulaButtonView>
       <PhoneButtonView>
         <Button color="#84D269">
-          <Icon name="call" size={22} color="white" />
+          <Icon name="md-call" size={22} color="white" />
         </Button>
       </PhoneButtonView>
       </PatientButtons>
@@ -30,23 +30,39 @@ const PatientScreen = ({ navigation }) => (
     <PatientAppointments>
       <Container>
         <AppointmentCard>
+          <MoreButton>
+            <Icon name="md-more" size={24} color="rgba(0, 0, 0, 0.4)" />
+          </MoreButton>
           <AppointmentCardRow>
             <Icon name="md-medical" size={16} color="#A3A3A3" />
             <AppointmentCardLabel>Зуб: <Text style={{ fontWeight: '600' }}>12</Text></AppointmentCardLabel>
           </AppointmentCardRow>
           <AppointmentCardRow>
-            <Icon name="clipboard-notes" size={16} color="#A3A3A3" />
+            <Icon name="ios-list" size={16} color="#A3A3A3" />
             <AppointmentCardLabel>Диагноз: <Text style={{ fontWeight: '600' }}>пульпит</Text></AppointmentCardLabel>
           </AppointmentCardRow>
+
           <AppointmentCardRow>
             <Badge style={{ width: 150 }} avtive>11.10.2019 - 15:40</Badge>
             <Badge color="green">1500 GEL</Badge>
           </AppointmentCardRow>
+
         </AppointmentCard>
       </Container>
     </PatientAppointments>
   </View>
 );
+
+const MoreButton = styled.TouchableOpacity`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 32px;
+  width: 32px;
+`;
 
 const AppointmentCardRow = styled.View`
   flex-direction: row;

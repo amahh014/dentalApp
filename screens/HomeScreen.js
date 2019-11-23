@@ -1,52 +1,24 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, SectionList } from 'react-native'
-import Icon from 'react-native-ionicons'
+import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
+import axios from "axios";
 
 import { Appointment, SectionTitle } from '../components';
 
-const DATA = [
- {
-   title: '21 November',
-   data : [
-     {
-       time: '15:30',
-       diagnosis: 'пульпит',
-       user: {
-         phone: '+995 (598) 00-58062',
-         fullname: 'Nizam Mamedov',
-         avatar:
-          'https://sun9-39.userapi.com/c850416/v850416828/c608c/eJQDiZSkjTw.jpg?ava=1'
-       }
-     },
-     {
-      time: '15:30',
-      diagnosis: 'пульпит',
-      user: {
-        phone: '+995 (598) 00-52062',
-        fullname: 'Vazgen Mamedov',
-        avatar:
-         'https://sun9-39.userapi.com/c850416/v850416828/c608c/eJQDiZSkjTw.jpg?ava=1'
-      }
-    },{
-      time: '15:30',
-      diagnosis: 'пульпит',
-      user: {
-        phone: '+995 (598) 00-68062',
-        fullname: 'Nizam Mamedov',
-        avatar:
-         'https://sun9-39.userapi.com/c850416/v850416828/c608c/eJQDiZSkjTw.jpg?ava=1'
-      }
-    },
-    
-   ]
- }
-];
+const HomeScreen = ({ navigation }) => {
+  const [data, setData] = useState(null);
 
-const HomeScreen = ({ navigation }) => (
+  useEffect(() => {
+    axios.get('https://trycode.pw/c/NQP1D.json').then(({ data }) => {
+      setData(data);
+    });
+  }, []);
+
+  return (
     <Container>
-        <SectionList
-          sections={DATA}
+        { data && ( <SectionList
+          sections={data}
           keyExtractor={(item, index) => index}
           renderItem={({ item }) => (
             <Appointment navigate={navigation.navigate} item={item} />
@@ -54,12 +26,12 @@ const HomeScreen = ({ navigation }) => (
         renderSectionHeader={({ section: { title } }) => (
           <SectionTitle>{title}</SectionTitle>
         )}
-      />
+        />)}
         <PlusButton>
           <Icon name="ios-add" size={36} color="white" />
         </PlusButton>
     </Container>
-);
+)};
 
 HomeScreen.navigationOptions = {
     title: 'Журнал приёмов',
