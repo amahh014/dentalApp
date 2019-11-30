@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, SectionList } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
+import Swipeable from 'react-native-swipeable-row';
 import axios from "axios";
 
 import { Appointment, SectionTitle } from '../components';
@@ -21,7 +22,21 @@ const HomeScreen = ({ navigation }) => {
           sections={data}
           keyExtractor={(item, index) => index}
           renderItem={({ item }) => (
-            <Appointment navigate={navigation.navigate} item={item} />
+            <Swipeable
+              rightButtons={[
+                <SwipeViewButton style={{ backgroundColor: '#B4C1CB' }}>
+                  <Icon name="md-create" size={28} color="white" />
+                </SwipeViewButton>,
+                <SwipeViewButton
+                  style={{ backgroundColor: '#F85A5A' }}
+                >
+                  <Icon name="ios-close" size={48} color="white" />
+                </SwipeViewButton>
+              ]}
+            >
+                <Appointment navigate={navigation.navigate} item={item} />
+            </Swipeable>
+            
         )}
         renderSectionHeader={({ section: { title } }) => (
           <SectionTitle>{title}</SectionTitle>
@@ -56,6 +71,14 @@ const PlusButton = styled.TouchableOpacity`
     elevation: 4;
     shadow-opacity: 0.4;
     shadow-radius: 3.5;
+`;
+
+const SwipeViewButton = styled.TouchableOpacity`
+  width: 75px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.View`
