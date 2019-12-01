@@ -12,8 +12,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const PatientScreen = ({ navigation }) => (
   <View style={{ flex: 1 }}>
     <PatientDetails>
-      <PatientFullname>{navigation.getParam('user', {}).fullname}</PatientFullname>
-      <GrayText>{navigation.getParam('user', {}).phone}</GrayText>
+      <PatientFullname>{navigation.getParam('patient', {}).fullname}</PatientFullname>
+      <GrayText>{navigation.getParam('patient', {}).phone}</GrayText>
 
       <PatientButtons>
         <FormulaButtonView>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, SectionList } from 'react-native'
+import { View, SectionList } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import Swipeable from 'react-native-swipeable-row';
@@ -9,18 +9,32 @@ import { Appointment, SectionTitle } from '../components';
 
 const HomeScreen = ({ navigation }) => {
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    axios.get('https://trycode.pw/c/NQP1D.json').then(({ data }) => {
-      setData(data);
+  // useEffect(() => {
+  //   axios.get('http://localhost:6666/appointments').then(({ data }) => {
+  //     setData(data.data);
+  //     setIsLoading(false);
+  //   });
+  // }, []);
+
+  const fetchAppointments = () => {
+    setIsLoading(true);
+    axios.get('http://localhost:6666/appointments').then(({ data }) => {
+      setData(data.data);
+      setIsLoading(false);
     });
-  }, []);
+  }
+
+  useEffect(fetchAppointments, []);
 
   return (
     <Container>
-        { data && ( <SectionList
+     {data && ( <SectionList
           sections={data}
           keyExtractor={(item, index) => index}
+          onRefresh={fetchAppointments}
+          refreshing={isLoading}
           renderItem={({ item }) => (
             <Swipeable
               rightButtons={[
@@ -42,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
           <SectionTitle>{title}</SectionTitle>
         )}
         />)}
-        <PlusButton>
+        <PlusButton onPress={navigation.navigate.bind(this, 'AddPatient')}>
           <Icon name="ios-add" size={36} color="white" />
         </PlusButton>
     </Container>
