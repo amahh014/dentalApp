@@ -1,12 +1,71 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+import { Item, Input, Label } from 'native-base';
+import styled from 'styled-components';
+// import Icon from 'react-native-vector-icons/Ionicons';
+import axios from "axios";
 
-const AddPatientScreen = ({ navigation }) => (
-    <View style={{ flex: 1 }}>
-      <Text>Salam Aga</Text>
-    </View>
+import { Button, Container } from '../components';
 
-)
+
+const AddPatientScreen = ({ navigation }) => {
+  const [values, setValues] = useState({});
+
+  const handleChange = (name, e) => {
+    const text = e.nativeEvent.text;
+    setValues({
+      ...values,
+      [name]: text,
+    });
+  };
+
+  const onSubmit = () => {
+    axios.post('http://localhost:6666/patients', values)
+      .then(() => {
+        navigation.navigate('Home');
+      })
+      .catch(e => {
+        alert('BAD');
+      });
+  };
+
+    return ( 
+    <Container>
+      <Item style={{ marginLeft: 0 }} floatingLabel>
+        <Label>Имя и Фамилия</Label>
+        <Input
+          onChange={handleChange.bind(this, 'fullname')}
+          value={values.fullname}
+          style={{ marginTop: 12 }}
+          autoFocus
+        />
+      </Item>
+
+      <Item style={{ marginTop: 20, marginLeft: 0 }} floatingLabel>
+        <Label>Номер телефона</Label>
+        <Input
+          onChange={handleChange.bind(this, 'phone')}
+          value={values.phone}
+          keyboardType="numeric"
+          dataDetectorTypes="phoneNumber"
+          style={{ marginTop: 12 }}
+        />
+      </Item>
+
+      <ButtonView>
+        <Button onPress={onSubmit} color="#87CC6F">
+          {/* <Icon name="ios-add" size={24} color="white" /> */}
+          <Text>Добавить пациента</Text>
+        </Button>
+      </ButtonView>
+    </Container>
+    );
+};
+
+const ButtonView = styled.View`
+  flex: 1;
+  margin-top: 30px;
+`;
 
 AddPatientScreen.navigationOptions = {
     title: 'Добавить пациента',

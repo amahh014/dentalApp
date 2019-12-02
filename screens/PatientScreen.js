@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, ActivityIndicator, Linking } from 'react-native';
 import styled from 'styled-components/native';
 
 import {
   GrayText,
   Button,
-  Badge
+  Badge,
+  
 } from '../components';
+
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const PatientScreen = ({ navigation }) => (
