@@ -1,28 +1,33 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
+
 import GrayText from './GrayText';
 import Badge from './Badge';
 
 import getAvatarColor from '../utils/getAvatarColor';
 
-const Appointment = ({ navigate, item}) => {
+const Appointment = ({ navigate, item }) => {
   const { patient, diagnosis, active, time } = item;
   const avatarColors = getAvatarColor(patient.fullname[0].toUpperCase());
-    return (
-        <GroupItem onPress={navigate.bind(this, 'Patient', item)}>
-            <Avatar
-              style={{
-                backgroundColor: avatarColors.background
-              }}><Letter style={{ color: avatarColors.color }}>{patient.fullname[0].toUpperCase()}</Letter>
-            </Avatar>
-            <View style={{ flex: 1 }}>
-              <FullName>{patient.fullname}</FullName>
-              <GrayText>{diagnosis}</GrayText>
-            </View>
-            <Badge active={active}>{time}</Badge>
-        </GroupItem>
-    );
+  return (
+    <GroupItem onPress={navigate.bind(this, 'Patient', item)}>
+      <Avatar
+        style={{
+          backgroundColor: avatarColors.background
+        }}
+      >
+        <Letter style={{ color: avatarColors.color }}>
+          {patient.fullname[0].toUpperCase()}
+        </Letter>
+      </Avatar>
+      <View style={{ flex: 1 }}>
+        <FullName>{patient.fullname}</FullName>
+        <GrayText>{diagnosis}</GrayText>
+      </View>
+      {time && <Badge active={active}>{time}</Badge>}
+    </GroupItem>
+  );
 };
 
 Appointment.defaultProps = {
@@ -58,4 +63,4 @@ const GroupItem = styled.TouchableOpacity`
   border-bottom-color: #f3f3f3;
 `;
 
-export default Appointment; 
+export default Appointment;

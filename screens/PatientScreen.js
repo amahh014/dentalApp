@@ -1,29 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, ActivityIndicator, Linking } from 'react-native';
 import styled from 'styled-components/native';
+import axios from "axios";
 
 import {
   GrayText,
   Button,
   Badge,
-  
+  PlusButton,
+  Container
 } from '../components';
 
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const PatientScreen = ({ navigation }) => (
+import phoneFormat from '../utils/phoneFormat';
+
+const PatientScreen = ({ navigation }) => {
+  const [appointments, setAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const id = navigation.getParam('patient')._id;
+    axios.get('http://localhost:6666/patients/' + id)
+      .then(({ data }) => {
+        setAppointments(data.data.appointments);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+ return ( 
   <View style={{ flex: 1 }}>
     <PatientDetails>
       <PatientFullname>{navigation.getParam('patient', {}).fullname}</PatientFullname>
-      <GrayText>{navigation.getParam('patient', {}).phone}</GrayText>
+      <GrayText>{phoneFormat(navigation.getParam('patient', {}).phone)}</GrayText>
 
       <PatientButtons>
         <FormulaButtonView>
       <Button>Формула зубов</Button>
         </FormulaButtonView>
       <PhoneButtonView>
-        <Button color="#84D269">
+        <Button onPress={() =>
+                Linking.openURL(
+                  'tel:' + navigation.getParam('patient', {}).phone
+                )
+              }
+              color="#84D269">
           <Icon name="md-call" size={22} color="white" />
         </Button>
       </PhoneButtonView>
@@ -32,29 +57,52 @@ const PatientScreen = ({ navigation }) => (
 
     <PatientAppointments>
       <Container>
-        <AppointmentCard>
+      {isLoading ? (
+            <ActivityIndicator size="large" color="#2A86FF" />
+          ) : (
+            appointments.map(appointment => (
+        <AppointmentCard key={appointment._id}>
           <MoreButton>
             <Icon name="md-more" size={24} color="rgba(0, 0, 0, 0.4)" />
           </MoreButton>
           <AppointmentCardRow>
             <Icon name="md-medical" size={16} color="#A3A3A3" />
-            <AppointmentCardLabel>Зуб: <Text style={{ fontWeight: '600' }}>12</Text></AppointmentCardLabel>
+            <AppointmentCardLabel>
+                    Зуб:{' '}
+                    <Text style={{ fontWeight: '600' }}>
+                      {appointment.dentNumber}
+                    </Text>
+                  </AppointmentCardLabel>
           </AppointmentCardRow>
           <AppointmentCardRow>
             <Icon name="ios-list" size={16} color="#A3A3A3" />
-            <AppointmentCardLabel>Диагноз: <Text style={{ fontWeight: '600' }}>пульпит</Text></AppointmentCardLabel>
+                  <AppointmentCardLabel>
+                    Диагноз:{' '}
+                    <Text style={{ fontWeight: '600' }}>
+                      {appointment.diagnosis}
+                    </Text>
+                  </AppointmentCardLabel>
           </AppointmentCardRow>
 
-          <AppointmentCardRow>
-            <Badge style={{ width: 150 }} avtive>11.10.2019 - 15:40</Badge>
-            <Badge color="green">1500 GEL</Badge>
+          <AppointmentCardRow style={{ marginTop: 15, justifyContent: 'space-between' }}>
+          <Badge style={{ width: 155 }} active>
+                    {appointment.date} - {appointment.time}
+                  </Badge>
+                  <Badge color="green">{appointment.price} Р</Badge>
           </AppointmentCardRow>
-
         </AppointmentCard>
+            ))
+          )}
       </Container>
     </PatientAppointments>
+    <PlusButton
+        onPress={navigation.navigate.bind(this, 'AddAppointment', {
+          patientId: navigation.getParam('patient', {})._id
+        })}
+      />
   </View>
-);
+ );
+};
 
 const MoreButton = styled.TouchableOpacity`
   display: flex;
@@ -67,16 +115,16 @@ const MoreButton = styled.TouchableOpacity`
   width: 32px;
 `;
 
+const AppointmentCardLabel = styled.Text`
+  font-size: 16px;
+  margin-left: 10px;
+`;
+
 const AppointmentCardRow = styled.View`
   flex-direction: row;
   align-items: center;
   margin-top: 3.5px;
   margin-bottom: 3.5px;
-`;
-
-const AppointmentCardLabel = styled.Text`
-  font-size: 16px;
-  margin-left: 10px;
 `;
 
 const AppointmentCard = styled.View`
@@ -90,11 +138,6 @@ const AppointmentCard = styled.View`
   margin-bottom: 20px;
 `;
 
-const Container = styled.View`
-  padding: 25px;
-  flex: 1;
-`;
-
 const PatientDetails = styled(Container)`
   flex: 0.3;
 `;
@@ -104,19 +147,17 @@ const PatientAppointments = styled.View`
   background: #f8fafd;
 `;
 
+const FormulaButtonView = styled.View`
+  flex: 1;
+`;
 
 const PhoneButtonView = styled.View`
   margin-left: 10px;
   width: 45px;
 `;
 
-
-const FormulaButtonView = styled.View`
-  flex: 1;
-`;
-
 const PatientButtons = styled.View`
-  margin-top: 20px;
+  flex: 1;
   flex-direction: row;
   margin-top: 20px;
 `;
@@ -129,12 +170,12 @@ const PatientFullname = styled.Text`
 `;
 
 PatientScreen.navigationOptions = {
-    title: 'Карта пациета',
-        headerTintColor: '#2A86FF',
-        headerStyle: {
-          elevation: 0.8,
-          shadowOpacity: 0.8
-        },
+  title: 'Карта пациента',
+  headerTintColor: '#2A86FF',
+  headerStyle: {
+    elevation: 0.8,
+    shadowOpacity: 0.8
+  }
 };
 
 export default PatientScreen;

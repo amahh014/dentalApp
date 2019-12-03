@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, SectionList } from 'react-native'
+import { SectionList, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import Swipeable from 'react-native-swipeable-row';
 import axios from "axios";
 
-import { Appointment, SectionTitle } from '../components';
+import { Appointment, SectionTitle, PlusButton } from '../components';
 
 const HomeScreen = ({ navigation }) => {
   const [data, setData] = useState(null);
@@ -26,7 +26,37 @@ const HomeScreen = ({ navigation }) => {
     });
   }
 
-  useEffect(fetchAppointments, []);
+  useEffect(fetchAppointments, [navigation.state.params]);
+
+
+  const removeAppointment = id => {
+    Alert.alert(
+      'Удаление приема',
+      'Вы действительно хотите удалить прием?',
+      [
+        {
+          text: 'Отмена',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        {
+          text: 'Удалить',
+          onPress: () => {
+            setIsLoading(true);
+            axios.delete('http://localhost:6666/appointments/' + id)
+              .then(() => {
+                fetchAppointments();
+              })
+              .catch(() => {
+                setIsLoading(false);
+              });
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
 
   return (
     <Container>
@@ -42,6 +72,7 @@ const HomeScreen = ({ navigation }) => {
                   <Icon name="md-create" size={28} color="white" />
                 </SwipeViewButton>,
                 <SwipeViewButton
+                  onPress={removeAppointment.bind(this, item._id)}
                   style={{ backgroundColor: '#F85A5A' }}
                 >
                   <Icon name="ios-close" size={48} color="white" />
@@ -70,22 +101,6 @@ HomeScreen.navigationOptions = {
       shadowOpacity: 0.8
     },
 }
-
-const PlusButton = styled.TouchableOpacity`
-    align-items: center;
-    justify-content: center;
-    border-radius: 50px;
-    width: 64px;
-    height: 64px;
-    background: #2a86ff;
-    position: absolute;
-    right: 25px;
-    bottom: 25px;
-    shadow-color: #2a86ff;
-    elevation: 4;
-    shadow-opacity: 0.4;
-    shadow-radius: 3.5;
-`;
 
 const SwipeViewButton = styled.TouchableOpacity`
   width: 75px;
