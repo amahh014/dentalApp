@@ -142,7 +142,7 @@ const PatientDetails = styled(Container)`
   flex: 0.3;
 `;
 
-const PatientAppointments = styled.View`
+const PatientAppointments = styled.ScrollView`
   flex: 1;
   background: #f8fafd;
 `;
