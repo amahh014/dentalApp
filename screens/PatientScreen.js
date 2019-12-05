@@ -14,7 +14,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import phoneFormat from '../utils/phoneFormat';
+import { phoneFormat } from '../utils';
 
 const PatientScreen = ({ navigation }) => {
   const [appointments, setAppointments] = useState([]);
@@ -63,7 +63,7 @@ const PatientScreen = ({ navigation }) => {
             appointments.map(appointment => (
         <AppointmentCard key={appointment._id}>
           <MoreButton>
-            <Icon name="md-more" size={24} color="rgba(0, 0, 0, 0.4)" />
+            <Icon name="ios-checkmark-circle" size={30} color="#84D269" />
           </MoreButton>
           <AppointmentCardRow>
             <Icon name="md-medical" size={16} color="#A3A3A3" />

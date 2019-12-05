@@ -11,13 +11,6 @@ const HomeScreen = ({ navigation }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:6666/appointments').then(({ data }) => {
-  //     setData(data.data);
-  //     setIsLoading(false);
-  //   });
-  // }, []);
-
   const fetchAppointments = () => {
     setIsLoading(true);
     axios.get('http://localhost:6666/appointments').then(({ data }) => {
@@ -25,7 +18,8 @@ const HomeScreen = ({ navigation }) => {
       setIsLoading(false);
     });
   }
-
+  
+  useEffect(fetchAppointments, []);
   useEffect(fetchAppointments, [navigation.state.params]);
 
 
@@ -62,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
     <Container>
      {data && ( <SectionList
           sections={data}
-          keyExtractor={(item, index) => index}
+          keyExtractor={item => item._id}
           onRefresh={fetchAppointments}
           refreshing={isLoading}
           renderItem={({ item }) => (
@@ -87,9 +81,8 @@ const HomeScreen = ({ navigation }) => {
           <SectionTitle>{title}</SectionTitle>
         )}
         />)}
-        <PlusButton onPress={navigation.navigate.bind(this, 'AddPatient')}>
-          <Icon name="ios-add" size={36} color="white" />
-        </PlusButton>
+        {/* <PlusButton onPress={navigation.navigate.bind(this, 'AddPatient')}>
+        </PlusButton> */}
     </Container>
 )};
 

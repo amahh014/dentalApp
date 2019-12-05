@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import GrayText from './GrayText';
 import Badge from './Badge';
 
-import getAvatarColor from '../utils/getAvatarColor';
+import { getAvatarColor } from '../utils';
 
 const Appointment = ({ navigate, item }) => {
   const { patient, diagnosis, active, time } = item;
