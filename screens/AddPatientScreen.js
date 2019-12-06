@@ -22,7 +22,7 @@ const AddPatientScreen = ({ navigation }) => {
   const onSubmit = () => {
     axios.post('http://localhost:6666/patients', values)
       .then(() => {
-        navigation.navigate('Home');
+        navigation.navigate('Patients');
       })
       .catch(e => {
         alert('BAD');

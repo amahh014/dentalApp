@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, ActivityIndicator, Linking } from 'react-native';
+import { Text, View, ActivityIndicator, Linking, Alert } from 'react-native';
 import styled from 'styled-components/native';
 import axios from "axios";
 
@@ -32,6 +32,50 @@ const PatientScreen = ({ navigation }) => {
       });
   }, []);
 
+ 
+  const fetchAppointments = () => {
+    const id = navigation.getParam('patient')._id;
+    setIsLoading(true);
+    axios.get('http://localhost:6666/patients/' + id)
+    .then(({ data }) => {
+      setAppointments(data.data.appointments);
+    })
+    .finally(e => {
+      setIsLoading(false);
+    });
+  }
+
+  const removeAppointment = id => {
+    Alert.alert(
+      'Удаление приема',
+      'Вы действительно хотите удалить прием?',
+      [
+        {
+          text: 'Отмена',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        {
+          text: 'Удалить',
+          onPress: () => {
+            setIsLoading(true);
+            axios.delete('http://localhost:6666/appointments/' + id)
+              .then(() => {
+                fetchAppointments();
+              })
+              .catch(() => {
+                setIsLoading(false);
+              });
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+
+  
+
  return ( 
   <View style={{ flex: 1 }}>
     <PatientDetails>
@@ -61,8 +105,10 @@ const PatientScreen = ({ navigation }) => {
             <ActivityIndicator size="large" color="#2A86FF" />
           ) : (
             appointments.map(appointment => (
-        <AppointmentCard key={appointment._id}>
-          <MoreButton>
+        <AppointmentCard key={appointment._id} onRefresh={fetchAppointments}>
+          <MoreButton
+          onPress={removeAppointment.bind(this, appointment._id) }
+          >
             <Icon name="ios-checkmark-circle" size={30} color="#84D269" />
           </MoreButton>
           <AppointmentCardRow>
