@@ -3,10 +3,12 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
+
 import { HomeScreen, PatientScreen, AddPatientScreen, AddAppointmentScreen, PatientsScreen } from './screens';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 Icon.loadFont();
+
 
 
 const AppNavigator = createStackNavigator({
@@ -32,6 +34,8 @@ const AppNavigator = createStackNavigator({
 // );
 
 const TabNavigator = createBottomTabNavigator({
+
+
 	Home: {
 		screen: AppNavigator,
 		navigationOptions: {
@@ -56,6 +60,7 @@ const TabNavigator = createBottomTabNavigator({
 	initialRouteName: 'Home'
 });
 
+
 const ModalStack = createStackNavigator({
 	Tabs: {
 		screen: TabNavigator
@@ -64,5 +69,7 @@ const ModalStack = createStackNavigator({
 	mode: 'modal',
 	headerMode: 'none'
 });
+
+
 
 export default createAppContainer(ModalStack);

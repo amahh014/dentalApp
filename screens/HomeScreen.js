@@ -5,7 +5,8 @@ import styled from 'styled-components/native';
 import Swipeable from 'react-native-swipeable-row';
 import axios from "axios";
 
-import { Appointment, SectionTitle, PlusButton } from '../components';
+import { Appointment, SectionTitle } from '../components';
+
 
 const HomeScreen = ({ navigation }) => {
   const [data, setData] = useState(null);
@@ -13,7 +14,9 @@ const HomeScreen = ({ navigation }) => {
 
   const fetchAppointments = () => {
     setIsLoading(true);
-    axios.get('http://localhost:6666/appointments').then(({ data }) => {
+    axios.get('http://localhost:6666/appointments')
+    
+    .then(({ data }) => {
       setData(data.data);
       setIsLoading(false);
     });
@@ -50,7 +53,6 @@ const HomeScreen = ({ navigation }) => {
       { cancelable: false }
     );
   };
-
 
   return (
     <Container>
