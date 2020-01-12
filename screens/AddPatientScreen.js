@@ -20,7 +20,7 @@ const AddPatientScreen = ({ navigation }) => {
   };
 
   const onSubmit = () => {
-    axios.post('http://localhost:6666/patients', values)
+    axios.post('https://dent-app-back.herokuapp.com/patients', values)
       .then(() => {
         navigation.navigate('Patients');
       })

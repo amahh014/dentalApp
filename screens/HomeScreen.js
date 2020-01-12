@@ -14,7 +14,7 @@ const HomeScreen = ({ navigation }) => {
 
   const fetchAppointments = () => {
     setIsLoading(true);
-    axios.get('http://localhost:6666/appointments')
+    axios.get('https://dent-app-back.herokuapp.com/appointments')
     
     .then(({ data }) => {
       setData(data.data);
@@ -40,7 +40,7 @@ const HomeScreen = ({ navigation }) => {
           text: 'Удалить',
           onPress: () => {
             setIsLoading(true);
-            axios.delete('http://localhost:6666/appointments/' + id)
+            axios.delete('https://dent-app-back.herokuapp.com/appointments/' + id)
               .then(() => {
                 fetchAppointments();
               })

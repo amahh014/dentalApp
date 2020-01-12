@@ -22,7 +22,7 @@ const PatientScreen = ({ navigation }) => {
 
   useEffect(() => {
     const id = navigation.getParam('patient')._id;
-    axios.get('http://localhost:6666/patients/' + id)
+    axios.get('https://dent-app-back.herokuapp.com/patients/' + id)
       .then(({ data }) => {
         setAppointments(data.data.appointments);
         setIsLoading(false);
@@ -36,7 +36,7 @@ const PatientScreen = ({ navigation }) => {
   const fetchAppointments = () => {
     const id = navigation.getParam('patient')._id;
     setIsLoading(true);
-    axios.get('http://localhost:6666/patients/' + id)
+    axios.get('https://dent-app-back.herokuapp.com/' + id)
     .then(({ data }) => {
       setAppointments(data.data.appointments);
     })
@@ -59,7 +59,7 @@ const PatientScreen = ({ navigation }) => {
           text: 'Удалить',
           onPress: () => {
             setIsLoading(true);
-            axios.delete('http://localhost:6666/appointments/' + id)
+            axios.delete('https://dent-app-back.herokuapp.com/appointments/' + id)
               .then(() => {
                 fetchAppointments();
               })
@@ -106,11 +106,11 @@ const PatientScreen = ({ navigation }) => {
           ) : (
             appointments.map(appointment => (
         <AppointmentCard key={appointment._id} onRefresh={fetchAppointments}>
-          <MoreButton
+          {/* <MoreButton
           onPress={removeAppointment.bind(this, appointment._id) }
           >
             <Icon name="ios-checkmark-circle" size={30} color="#84D269" />
-          </MoreButton>
+          </MoreButton> */}
           <AppointmentCardRow>
             <Icon name="md-medical" size={16} color="#A3A3A3" />
             <AppointmentCardLabel>

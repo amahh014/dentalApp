@@ -42,7 +42,7 @@ const AddAppointmentScreen = ({ navigation }) => {
       };
       
       const onSubmit = () => {
-        axios.post('http://localhost:6666/appointments', values)
+        axios.post('https://dent-app-back.herokuapp.com/appointments', values)
           .then(() => {
             navigation.navigate('Home', { lastUpdate: new Date() });
           })

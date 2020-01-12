@@ -18,7 +18,7 @@ const PatientsScreen = props => {
 
   const fetchPatients = () => {
     setIsLoading(true);
-    axios.get('http://localhost:6666/patients')
+    axios.get('https://dent-app-back.herokuapp.com/patients')
       .then(({ data }) => {
         setData(data.data);
       })
@@ -49,7 +49,7 @@ const PatientsScreen = props => {
           text: 'Удалить',
           onPress: () => {
             setIsLoading(true);
-            axios.delete('http://localhost:6666/patients/' + id)
+            axios.delete('https://dent-app-back.herokuapp.com/patients/' + id)
               .then(() => {
                 fetchPatients();
               })

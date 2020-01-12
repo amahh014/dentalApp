@@ -26,7 +26,7 @@ const AppNavigator = createStackNavigator({
   },
    Patients: {
       screen: PatientsScreen
-    }
+		}
 });
 // {
 //   initialRouteName: 'Patients'
