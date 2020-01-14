@@ -32,7 +32,7 @@ const AddPatientScreen = ({ navigation }) => {
     return ( 
     <Container>
       <Item style={{ marginLeft: 0 }} floatingLabel>
-        <Label>Имя и Фамилия</Label>
+        <Label>სახელი, გვარი</Label>
         <Input
           onChange={handleChange.bind(this, 'fullname')}
           value={values.fullname}
@@ -42,7 +42,7 @@ const AddPatientScreen = ({ navigation }) => {
       </Item>
 
       <Item style={{ marginTop: 20, marginLeft: 0 }} floatingLabel>
-        <Label>Номер телефона</Label>
+        <Label>მობილური ნომერი</Label>
         <Input
           onChange={handleChange.bind(this, 'phone')}
           value={values.phone}
@@ -55,7 +55,7 @@ const AddPatientScreen = ({ navigation }) => {
       <ButtonView>
         <Button onPress={onSubmit} color="#87CC6F">
           {/* <Icon name="ios-add" size={24} color="white" /> */}
-          <Text>Добавить пациента</Text>
+          <Text>პაციენტის დამატება</Text>
         </Button>
       </ButtonView>
     </Container>
@@ -68,7 +68,7 @@ const ButtonView = styled.View`
 `;
 
 AddPatientScreen.navigationOptions = {
-    title: 'Добавить пациента',
+    title: 'პაციენტის დამატება',
     headerTintColor: '#2A86FF',
     headerStyle: {
       elevation: 0.8,

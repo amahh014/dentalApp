@@ -28,16 +28,16 @@ const HomeScreen = ({ navigation }) => {
 
   const removeAppointment = id => {
     Alert.alert(
-      'Удаление приема',
-      'Вы действительно хотите удалить прием?',
+      'მიღების გაუქმება',
+      'ნამდვილად გნებავთ მიღების გაუქმება?',
       [
         {
-          text: 'Отмена',
+          text: 'არა',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: 'Удалить',
+          text: 'კი',
           onPress: () => {
             setIsLoading(true);
             axios.delete('https://dent-app-back.herokuapp.com/appointments/' + id)
@@ -89,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
 )};
 
 HomeScreen.navigationOptions = {
-    title: 'Журнал приёмов',
+    title: 'მიღების ჟურნალი',
     headerTintColor: '#2A86FF',
     headerStyle: {
       elevation: 0.8,

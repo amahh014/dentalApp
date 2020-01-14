@@ -21,11 +21,11 @@ const AddAppointmentScreen = ({ navigation }) => {
     });
 
     const fieldsName = {
-        diagnosis: 'Диагноз',
-        dentNumber: 'Номер зуба',
-        price: 'Цена',
-        date: 'Дата',
-        time: 'Время'
+        diagnosis: 'დიაგნოზი',
+        dentNumber: 'კბილისი ნომერი',
+        price: 'ფასი',
+        date: 'თარიღი',
+        time: 'დრო'
       };
 
     const setFieldValue = (name, value) => {
@@ -59,7 +59,7 @@ const AddAppointmentScreen = ({ navigation }) => {
       return (
         <Container>
           <Item style={{ marginLeft: 0 }} floatingLabel>
-            <Label>Номер зуба</Label>
+            <Label>კბილის ნომერი</Label>
             <Input
               onChange={handleInputChange.bind(this, 'dentNumber')}
               value={values.fullname}
@@ -69,7 +69,7 @@ const AddAppointmentScreen = ({ navigation }) => {
             />
           </Item>
           <Item style={{ marginTop: 20, marginLeft: 0 }} floatingLabel>
-            <Label>Цена</Label>
+            <Label>ფასი</Label>
             <Input
               onChange={handleInputChange.bind(this, 'price')}
               value={values.phone}
@@ -80,16 +80,22 @@ const AddAppointmentScreen = ({ navigation }) => {
           <Item style={{ marginTop: 20, marginLeft: 0 }}>
             <Picker
               mode="dropdown"
-              placeholder="Выберите диагноз"
+              placeholder="აირჩიე დიაგნოზი"
               placeholderStyle={{ color: '#bfc6ea' }}
               placeholderIconColor="#007aff"
               style={{ width: '100%' }}
               onValueChange={setFieldValue.bind(this, 'diagnosis')}
               selectedValue={values.diagnosis}
             >
-              <Picker.Item label="пульпит" value="пульпит" />
-              <Picker.Item label="удаление зуба" value="удаление зуба" />
-              <Picker.Item label="спид" value="спид" />
+              <Picker.Item label="თერაპია" value="თერაპია" />
+              <Picker.Item label="კონსულტაცია" value="კონსულტაცია" />
+              <Picker.Item label="კოფერდამი/ოპტრაგეითსი" value="კოფერდამი/ოპტრაგეითსი" />
+              <Picker.Item label="კარიესის მკურნალობა" value="კკარიესის მკურნალობა" />
+              <Picker.Item label="ფრონტალური კბილების რესტავრაცია" value="ფრონტალური კბილების რესტავრაცია" />
+              <Picker.Item label="საღეჭი კბილების რესტავრაცია	" value="საღეჭი კბილების რესტავრაცია	" />
+              <Picker.Item label="შინირება ერთი კბილის არეში" value="შინირება ერთი კბილის არეში" />
+              <Picker.Item label="მერილენდის ხიდი" value="მერილენდის ხიდი" />
+              <Picker.Item label="სამკურნალო სარჩული" value="სამკურნალო სარჩული" />
             </Picker>
           </Item>
           <Item style={{ marginTop: 20, marginLeft: 0 }}>
@@ -98,11 +104,11 @@ const AddAppointmentScreen = ({ navigation }) => {
                 <DatePicker
                   date={new Date()}
                   mode="date"
-                  placeholder="Дата"
+                  placeholder="თარიღი"
                   format="YYYY-MM-DD"
                   minDate={new Date()}
-                  confirmBtnText="Сохранить"
-                  cancelBtnText="Отмена"
+                  confirmBtnText="შენახვა"
+                  cancelBtnText="გაუქება"
                   showIcon={false}
                   customStyles={{
                     dateInput: {
@@ -119,11 +125,11 @@ const AddAppointmentScreen = ({ navigation }) => {
               <View style={{ flex: 1 }}>
                 <DatePicker
                   mode="time"
-                  placeholder="Время"
+                  placeholder="დრო"
                   format="HH:mm"
                   minDate={new Date()}
-                  confirmBtnText="Сохранить"
-                  cancelBtnText="Отмена"
+                  confirmBtnText="შენახვა"
+                  cancelBtnText="გაუქება"
                   showIcon={false}
                   customStyles={{
                     dateInput: {
@@ -141,8 +147,8 @@ const AddAppointmentScreen = ({ navigation }) => {
           </Item>
           <ButtonView>
             <Button onPress={onSubmit} color="#87CC6F">
-              <Icon name="ios-add" size={24} color="white" />
-              <Text>Добавить приема</Text>
+              {/* <Icon name="ios-add" size={24} color="white" /> */}
+              <Text>დამატება</Text>
             </Button>
           </ButtonView>
         </Container>
@@ -159,7 +165,7 @@ const AddAppointmentScreen = ({ navigation }) => {
     `;
     
     AddAppointmentScreen.navigationOptions = {
-      title: 'Добавить прием',
+      title: 'მიღების დამატება',
       headerTintColor: '#2A86FF',
       headerStyle: {
         elevation: 0.8,

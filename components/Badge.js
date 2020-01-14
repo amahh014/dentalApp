@@ -35,7 +35,7 @@ export default styled.Text`
   border-radius: 18px;
   font-weight: 600;
   font-size: 14px;
-  width: 70px;
+  width: 90px;
   height: 32px;
   text-align: center;
   line-height: 30px;

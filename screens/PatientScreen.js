@@ -84,7 +84,7 @@ const PatientScreen = ({ navigation }) => {
 
       <PatientButtons>
         <FormulaButtonView>
-      <Button>Формула зубов</Button>
+      <Button>პაციენტის შესახებ</Button>
         </FormulaButtonView>
       <PhoneButtonView>
         <Button onPress={() =>
@@ -114,8 +114,8 @@ const PatientScreen = ({ navigation }) => {
           <AppointmentCardRow>
             <Icon name="md-medical" size={16} color="#A3A3A3" />
             <AppointmentCardLabel>
-                    Зуб:{' '}
-                    <Text style={{ fontWeight: '600' }}>
+                    კბილი:{' '}
+                    <Text style={{ fontWeight: '600', color : "green" }}>
                       {appointment.dentNumber}
                     </Text>
                   </AppointmentCardLabel>
@@ -123,8 +123,8 @@ const PatientScreen = ({ navigation }) => {
           <AppointmentCardRow>
             <Icon name="ios-list" size={16} color="#A3A3A3" />
                   <AppointmentCardLabel>
-                    Диагноз:{' '}
-                    <Text style={{ fontWeight: '600' }}>
+                    დიაგნოზი:{' '}
+                    <Text style={{ fontWeight: '600', color: "red" }}>
                       {appointment.diagnosis}
                     </Text>
                   </AppointmentCardLabel>
@@ -134,7 +134,7 @@ const PatientScreen = ({ navigation }) => {
           <Badge style={{ width: 155 }} active>
                     {appointment.date} - {appointment.time}
                   </Badge>
-                  <Badge color="green">{appointment.price} Р</Badge>
+                  <Badge color="green">{appointment.price} GEL</Badge>
           </AppointmentCardRow>
         </AppointmentCard>
             ))
@@ -216,7 +216,7 @@ const PatientFullname = styled.Text`
 `;
 
 PatientScreen.navigationOptions = {
-  title: 'Карта пациента',
+  title: 'პაციენტის რუკა',
   headerTintColor: '#2A86FF',
   headerStyle: {
     elevation: 0.8,

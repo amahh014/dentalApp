@@ -69,7 +69,7 @@ const PatientsScreen = props => {
         <>
           <View style={{ padding: 20 }}>
             <Item style={{ paddingLeft: 15, borderRadius: 30 }} regular>
-              <Input onChange={onSearch} placeholder="Поиск..." />
+              <Input onChange={onSearch} placeholder="ძებნა ..." />
             </Item>
           </View>
           <FlatList
