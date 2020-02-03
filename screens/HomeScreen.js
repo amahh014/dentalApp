@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { SectionList, Alert } from 'react-native'
+import { SectionList, Alert, ActivityIndicator } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import Swipeable from 'react-native-swipeable-row';
 import axios from "axios";
 
 import { Appointment, SectionTitle } from '../components';
+
 
 
 const HomeScreen = ({ navigation }) => {
@@ -54,6 +55,9 @@ const HomeScreen = ({ navigation }) => {
     );
   };
 
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#2A86FF" />
+  } else {
   return (
     <Container>
      {data && ( <SectionList
@@ -83,10 +87,8 @@ const HomeScreen = ({ navigation }) => {
           <SectionTitle>{title}</SectionTitle>
         )}
         />)}
-        {/* <PlusButton onPress={navigation.navigate.bind(this, 'AddPatient')}>
-        </PlusButton> */}
     </Container>
-)};
+)}};
 
 HomeScreen.navigationOptions = {
     title: 'მიღების ჟურნალი',
