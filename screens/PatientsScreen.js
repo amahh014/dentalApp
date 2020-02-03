@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Alert, View } from 'react-native';
+import { FlatList, Alert, View, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import Swipeable from 'react-native-swipeable-row';
@@ -62,7 +62,9 @@ const PatientsScreen = props => {
       { cancelable: false }
     );
   };
-
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#2A86FF" />
+  } else {
   return (
     <Container>
       {data && (
@@ -114,7 +116,7 @@ const PatientsScreen = props => {
       <PlusButton onPress={navigation.navigate.bind(this, 'AddPatient')} />
     </Container>
   );
-};
+}};
 
 PatientsScreen.navigationOptions = {
   title: 'Пациенты',
